@@ -1,5 +1,6 @@
 let cardsData = [{
   id: 1,
+  number: 1,
   image: 'https://artforlife.ru/wp-content/uploads/2019/03/660347-629795-cryptocurrency-thinkstock-120417.jpg',
   avatar: 'https://avatars.dicebear.com/api/initials/john%20doe.svg',
   user: {
@@ -11,6 +12,7 @@ let cardsData = [{
 },
 {
   id: 1,
+  number: 2,
   image: 'https://img5.goodfon.ru/wallpaper/nbig/3/c9/efir-ethereum-eth-logo-logo-sinii.jpg',
   avatar: 'https://avatars.dicebear.com/api/initials/john%20doe.svg',
   user: {
@@ -22,6 +24,7 @@ let cardsData = [{
 },
 {
   id: 1,
+  number: 3,
   image: 'https://i.pinimg.com/originals/81/dd/d2/81ddd2195bb2f54b23f8261ef52c59a4.jpg',
   avatar: 'https://avatars.dicebear.com/api/initials/john%20doe.svg',
   user: {
@@ -33,6 +36,7 @@ let cardsData = [{
 },
 {
   id: 1,
+  number: 4,
   image: 'https://www.forex.academy/wp-content/uploads/2021/01/6A2A2A42-BEF0-4D5B-85E9-F0D95C77E872.jpeg',
   avatar: 'https://avatars.dicebear.com/api/initials/john%20doe.svg',
   user: {
@@ -44,6 +48,7 @@ let cardsData = [{
 },
 {
   id: 1,
+  number: 5,
   image: 'https://profitgid.ru/wp-content/uploads/2020/12/13.12.2020_1_1-scaled.jpg',
   avatar: 'https://avatars.dicebear.com/api/initials/john%20doe.svg',
   user: {
