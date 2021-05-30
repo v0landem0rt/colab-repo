@@ -32,15 +32,8 @@
                             <a href="{{ url_for('auth.login') }}" class="navbar-item">
                                 Login
                             </a>
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                                Sign Up
-                            </a>
                             {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                Logout
-                            </a>
-                            {% endif %}
+                         
                               {% if current_user.is_authenticated %}  <!-- добавляю новую страницу -->
                             <a href="{{ url_for('auth.payment') }}" class="navbar-item">  <!-- тут ссылка на функцию которая рендерит страницу для оплаты товаров -->
                                Payment page 
@@ -48,7 +41,13 @@
                             {% endif %}
                               {% if current_user.is_authenticated %}  <!-- добавляю новую страницу -->
                             <a href="{{ url_for('auth.shop') }}" class="navbar-item">  <!-- тут ссылка на функцию которая рендерит страницу для выбора товаров -->
-                               Our online shop 
+                               Preview page
+                            </a>
+                            <a href="{{ url_for('auth.crypto') }}" class="navbar-item">  <!-- тут ссылка на функцию которая рендерит страницу для выбора товаров -->
+                               Cryptocurrency trading page 
+                            </a>
+                            <a href="{{ url_for('auth.tokeninfo') }}" class="navbar-item">  <!-- тут ссылка на функцию которая рендерит страницу для выбора товаров -->
+                               Tokeninfo page 
                             </a>
                             {% endif %}
                         </div>
