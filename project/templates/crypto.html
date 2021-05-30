@@ -14,7 +14,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/cardsData.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename= 'cards.css') }}"> 
-   
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/web3/dist/web3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/tarp/require/require.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='metamask.js') }}"></script>
   </head>
 
  <body>
@@ -37,11 +39,11 @@
             <a class="navbar-item is-active">
               Home
             </a>
-            <a class="navbar-item">
-              Examples
+            <a class="navbar-item" id="button_6">
+              Discrete optimization of portfolio
             </a>
-            <a class="navbar-item">
-              Features
+            <a class="navbar-item" id="button_7">
+              Continuous optimization of portfolio
             </a>
             <a class="navbar-item">
               Team
@@ -65,7 +67,7 @@
             <h1 class="title" style="color: ghostwhite;">Cryptocurrency Trading Page</h1><br>
           </div>
         </div>
-        <div id="app" class="row columns is-multiline">
+        <div id="app" class="row columns is-multiline"> 
           <div v-for="card in cardData" key="card.id" class="column is-4" style="justify-content: center;" >
             <div class="card large">
               <div class="card-image">
@@ -100,8 +102,59 @@
               </div>
             </div>
           </div>
-        </div>
 
+
+
+
+
+
+
+
+<div class="column is-4" style="justify-content: center;">
+  <div class="card large">
+     <div class="card-image">
+        <figure class="image is-16by9">
+            <img src="https://news.bitcoin.com/wp-content/uploads/2019/01/russia-ai-crypto.jpg" alt="Image">
+        </figure>
+     </div> 
+    <div class="card-content">
+      <div class="media">
+       <!--  <div class="media-left">
+            <figure class="image is-48x48"><img src="https://avatars.dicebear.com/api/initials/john%20doe.svg" alt="Image"></figure>
+         </div> -->
+         <div class="media-content">
+		<p class="title is-4 no-padding">Transactions</p> 
+		<p><span class="title is-6"><a href="http://twitter.com/cryptocurrency info">  </a></span></p> 
+                <p><span class="title is-6"><a href="http://twitter.com/cryptocurrency info">  </a></span></p> 
+		<!--<p><span class="title is-6"><a href="http://twitter.com/cryptocurrency info"> Transaction 1: </a></span></p>
+                <p><span class="title is-6"><a href="http://twitter.com/cryptocurrency info"> Transaction 2: </a></span></p>
+                <p><span class="title is-6"><a href="http://twitter.com/cryptocurrency info"> Transaction 3: </a></span></p> -->
+                <p class="subtitle is-6">_____________</p>
+                <p class="subtitle is-6" id="text_change">Transaction 1</p>
+                <p class="subtitle is-6" id="text_change1">Transaction 2</p>
+                <p class="subtitle is-6" id="text_change2">Transaction 3</p>
+                <p class="subtitle is-6" id="text_change3">Token id</p>
+            
+         </div>
+         <div class="content">
+               <div class="background-icon">
+                     <span class="icon-twitter"></span>
+         </div>
+      </div> 
+    
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+        </div>
       </div>
     </div>
     <footer class="footer">
@@ -134,6 +187,249 @@
       })
 
     </script>
+<script>
+
+koefficent=0;
+
+let vektor_a=[]; //тут будут 4 актива
+
+
+const btn1 = document.getElementById("1"); //проставлем чекбоксы и кнопки выбора алгоритма
+const btn2 = document.getElementById("2");
+const btn3 = document.getElementById("3");
+const btn4 = document.getElementById("4");
+const btn5 = document.getElementById("5");
+const btn6 = document.getElementById("button_6");
+const btn7 = document.getElementById("button_7");
+
+
+p = document.getElementById('text_change');//trans 1
+p1 = document.getElementById('text_change1');//trans 2
+p2 = document.getElementById('text_change2');//trans 3
+p4 = document.getElementById('text_change3');//id of token
+
+
+var dataMasiv = [];
+
+
+async function postData(url = '', data = {}, x, pressed_button) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *client
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  let a = await response.json();
+  dataMasiv = Object.values(a);
+  
+  //console.log(pressed_button);
+  if (pressed_button==1){      //обработка результата для выбраного алгоритма
+  	createSelect(dataMasiv,x); //добавляем то что выдал 1 алгоритм  
+  }
+  else { //тут добавляем в токен, то что выдал 2 алгоритм
+       dataMasiv = dataMasiv.map(function(each_element){
+    		return Number(each_element.toFixed(2)); //округляем
+       });
+ 
+       let data_text = "asset composition with second algoritm - ";
+       for (let j = 0; j < dataMasiv.length; j++) {
+
+       		data_text = data_text+" "+ (dataMasiv[j]).toString();
+      }
+     //console.log(data_text);
+     callContract(x,data_text);
+  }
+  
+  return dataMasiv; // parses JSON response into native JavaScript objects
+}
+
+
+var textinmasiv = "";
+
+function createSelect(dataMasiv,x){ //функция для выбора пакета с активами(тут мы отрисовываем выпадающую менюшку и отправляем в блокчейн актив который выбрал пользователь)
+  let select = document.createElement('select');
+  for (let i = 0; i <= (dataMasiv.length-1); i++) { 
+
+    let option = document.createElement('option');
+    textinmasiv = "asset "+(i+1).toString()+" - ";
+
+    for (let j = 0; j <= 2; j++) {
+       //console.log(j,'-',i);
+       textinmasiv = textinmasiv+" "+ (dataMasiv[i][j]).toString();
+      }
+    option.value     = textinmasiv; //можно в value записать, то что передадим в блокчейн
+    option.innerText = textinmasiv;    
+    select.appendChild(option);
+  }
+  select.setAttribute("id", "id_you_like");
+  document.getElementById('container').appendChild(select);
+  
+
+  document.getElementById('id_you_like').addEventListener('change', function() {  //тут мы выбираем себе актив в элементе select
+    //console.log('You selected: ', this.value);
+    callContract(x,this.value);
+  });
+ 
+
+//тут добавляем listener для элемента, потом добавим функции отправки в блокчейн
+
+
+
+}
+
+var buton =document.getElementsByTagName("button");
+
+btn1.onclick = function (evt) {
+   if (vektor_a.length==0){
+       alert('choose portfolio optimisation first');
+       return;
+   }
+  
+   if (vektor_a.length<5){
+      if (this.style.backgroundColor != "green"){this.style.backgroundColor = "green"}
+      vektor_a.push(3);
+      koefficent=koefficent+3;
+
+   }
+   if (vektor_a.length==5){		//тут мы отправляем данные на сервак
+      
+	postData('http://127.0.0.1:5000/getjs', { vektor_a },koefficent, vektor_a[0])
+  	 .then((data) => {
+
+  	});
+        vektor_a = [];
+        koefficent=0;
+
+        for(let j = 2; j < 7; j++) {
+        	buton[j].style.backgroundColor = "white";//вместо this надо button
+        }
+
+   }
+
+};
+
+btn2.onclick = function (evt) {  
+   if (vektor_a.length==0){
+       alert('choose portfolio optimisation first');
+       return;
+   }
+  if (vektor_a.length<5){
+      if (this.style.backgroundColor != "green"){this.style.backgroundColor = "green"}
+      vektor_a.push(2);
+      koefficent=koefficent+2;
+   }
+   if (vektor_a.length==5){		
+      
+	postData('http://127.0.0.1:5000/getjs', { vektor_a }, koefficent,vektor_a[0])
+  	 .then((data) => {
+
+  	});
+        koefficent=0;
+       vektor_a = [];
+       for(let j = 2; j < 7; j++) {
+        	buton[j].style.backgroundColor = "white";//вместо this надо button
+        }
+   }
+
+
+};
+
+
+btn3.onclick = function(evt) { 
+   if (vektor_a.length==0){
+       alert('choose portfolio optimisation first');
+       return;
+   }
+  if (vektor_a.length<5){
+      if (this.style.backgroundColor != "green"){this.style.backgroundColor = "green"}
+      vektor_a.push(4);
+      koefficent=koefficent+4.2;
+   }
+   if (vektor_a.length==5){		
+      
+	postData('http://127.0.0.1:5000/getjs', { vektor_a }, koefficent,vektor_a[0])
+  	 .then((data) => {
+
+  	});
+	koefficent=0;
+       vektor_a = [];
+        for(let j = 2; j < 7; j++) {
+        	buton[j].style.backgroundColor = "white";//вместо this надо button
+        }
+   }
+ 
+};
+
+
+btn4.onclick = function(evt) { 
+   if (vektor_a.length==0){
+       alert('choose portfolio optimisation first');
+       return;
+   }
+  if (vektor_a.length<5){
+      if (this.style.backgroundColor != "green"){this.style.backgroundColor = "green"}
+      vektor_a.push(6);
+      koefficent=koefficent+6;
+   }
+   if (vektor_a.length==5){		
+      
+	postData('http://127.0.0.1:5000/getjs', { vektor_a },koefficent, vektor_a[0])
+  	 .then((data) => {
+
+  	});
+        koefficent=0;
+       vektor_a = [];
+        for(let j = 2; j < 7; j++) {
+        	buton[j].style.backgroundColor = "white";//вместо this надо button
+        }
+   }
+ 
+};
+
+btn5.onclick = function(evt) { 
+   if (vektor_a.length==0){
+       alert('choose portfolio optimisation first');
+       return;
+   }
+  if (vektor_a.length<5){
+      if (this.style.backgroundColor != "green"){this.style.backgroundColor = "green"}
+      vektor_a.push(5);
+      koefficent=koefficent+2.5;
+   }
+   if (vektor_a.length==5){		
+      
+	postData('http://127.0.0.1:5000/getjs', { vektor_a },koefficent,vektor_a[0])
+  	 .then((data) => {
+
+  	});
+        koefficent=0;
+       vektor_a = [];
+
+        for(let j = 2; j < 7; j++) {
+        	buton[j].style.backgroundColor = "white";//вместо this надо button
+        }
+   }
+ 
+};
+btn6.onclick = function(evt) {
+vektor_a.push(1);
+};
+ 
+btn7.onclick = function(evt) {
+vektor_a.push(2);
+}
+
+
+    </script>
+
   </body>
 
 </html>

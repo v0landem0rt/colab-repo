@@ -1,0 +1,29 @@
+<div class="column is-4" style="justify-content: center;">
+  <div class="card large">
+     <div class="card-image">
+        <figure class="image is-16by9">
+           <img src="https://source.unsplash.com/h-ACUrBngrw/1280x720" alt="Image">
+        </figure>
+     </div> 
+    <div class="card-content">
+      <div class="media">
+         <div class="media-left">
+            <figure class="image is-48x48"><img src="https://avatars.dicebear.com/api/initials/john%20doe.svg" alt="Image"></figure>
+         </div> 
+         <div class="media-content">
+		<p class="title is-4 no-padding">Transactions</p> 
+		<p><span class="title is-6"><a href="http://twitter.com/cryptocurrency info"> cryptocurrency info </a></span></p> 
+		<p class="subtitle is-6">Transactions</p>
+         </div>
+      </div> 
+      <div class="content">Here you can see your trasactions
+               <div class="background-icon">
+                     <span class="icon-twitter"></span>
+               </div>
+      </div> 
+      <div id="example-1">
+	  <input type="checkbox" id="undefined" name="cc"> <label for="c1"><span></span>Transactions</label>
+      </div>
+</div>
+</div>
+</div>
